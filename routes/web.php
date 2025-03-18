@@ -24,7 +24,7 @@ Route::get('products', [ProductsController::class, 'index']);
 Route::get('products/create', [ProductsController::class, 'create']);
 Route::post('products/store', [ProductsController::class, 'store']);
 Route::get('products/edit/{id}', [ProductsController::class, 'edit']);
-Route::get('products/delete/{id}', [ProductsController::class, 'destroy']);
+Route::delete('products/delete/{id}', [ProductsController::class, 'destroy']);
 Route::patch('products/update/{id}', [ProductsController::class, 'update']);
 
 // Ctegories
@@ -33,8 +33,8 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/create', [CategoryController::class, 'create']);
 Route::post('categories/store', [CategoryController::class, 'store']);
 Route::get('categories/edit/{id}', [CategoryController::class, 'edit']);
-Route::get('categories/update/{id}', [CategoryController::class, 'update']);
-Route::patch('categories/delete/{id}', [CategoryController::class, 'destroy']);
+Route::patch('categories/update/{id}', [CategoryController::class, 'update']);
+Route::get('categories/delete/{id}', [CategoryController::class, 'destroy']);
 
 // Front Page Routes
 
