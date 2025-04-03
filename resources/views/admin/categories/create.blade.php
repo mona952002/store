@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="py-3">
-        <form action="{{url('categories/store')}}" method="post">
+        <form action="{{ route('categories.store')}}" method="post">
             @csrf
             <div class="mb-3">
                 <label for="nameFormControlInput" class="form-label">اسم الصنف</label>

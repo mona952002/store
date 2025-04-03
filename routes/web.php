@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
-use Illuminate\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,26 +18,34 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-//Dashboard Routes
-// products
-Route::resource('products', ProductsController::class);
-Route::get('products', [ProductsController::class, 'index']);
-Route::get('products/create', [ProductsController::class, 'create']);
-Route::post('products/store', [ProductsController::class, 'store']);
-Route::get('products/edit/{id}', [ProductsController::class, 'edit']);
-Route::delete('products/delete/{id}', [ProductsController::class, 'destroy']);
-Route::patch('products/update/{id}', [ProductsController::class, 'update']);
-
-// Ctegories
-
-Route::get('categories', [CategoryController::class, 'index']);
-Route::get('categories/create', [CategoryController::class, 'create']);
-Route::post('categories/store', [CategoryController::class, 'store']);
-Route::get('categories/edit/{id}', [CategoryController::class, 'edit']);
-Route::patch('categories/update/{id}', [CategoryController::class, 'update']);
-Route::get('categories/delete/{id}', [CategoryController::class, 'destroy']);
-
-// Front Page Routes
-
 Route::get('/', [FrontController::class, 'index']);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/products', [ProductsController::class, 'index'])->middleware(['auth', 'verified'])->name('products');
+Route::get('/categories', [CategoryController::class, 'index'])->middleware(['auth', 'verified'])->name('categories');
+
+Route::prefix('admin')->group(function () {
+    Route::get('products', [ProductsController::class, 'index'])->name('products.index');
+    Route::get('products/create', [ProductsController::class, 'create'])->name('products.create');
+    Route::post('products/store', [ProductsController::class, 'store'])->name('products.store');
+    Route::get('products/edit/{id}', [ProductsController::class, 'edit'])->name('products.edit');
+    Route::get('products/delete/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
+    Route::patch('products/update/{id}', [ProductsController::class, 'update'])->name('products.update');
+
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('categories/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('categories/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::patch('categories/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('categories/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+});
+
+require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -2,7 +2,7 @@
 @section('content')
     <div class="py-3">
         <h2>إضافة منتج جديد</h2>
-        <form action="{{ url('products/store') }}" method="post">
+        <form action="{{ route('products.store') }}" method="post">
             @csrf
             <div class="mb-3">
                 <label for="nameFormControlInput" class="form-label">اسم المنتج</label>

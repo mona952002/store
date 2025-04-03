@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $categories = Category::all();
@@ -52,11 +57,10 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        $category->name = $request->name;
-
+        $category->update(['name' => $request->name,]) ;
         $category->save();
 
-        return redirect('categories');
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -67,6 +71,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
-        return redirect()->back();
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
     }
 }

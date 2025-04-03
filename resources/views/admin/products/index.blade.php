@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="py-4">
-        <a href="{{ url('products/create') }}" class="btn btn-primary mb-3">أضف منتج جديد</a>
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">أضف منتج جديد</a>
         <table class="table">
             <thead>
                 <tr>
@@ -22,12 +22,13 @@
                         <td>{{$product->price}}</td>
                         <td>{{$product->quantity}}</td>
                         <td>
-                            <a href="{{url('products/delete/'.$product->id)}}" class="btn btn-danger">احذف</a>
-                            <a href="{{url('products/edit/'.$product->id)}}" class="btn btn-info">تعديل</a>
+                            <a href="{{ route('products.destroy', $product->id)}}" class="btn btn-danger">احذف</a>
+                            <a href="{{ route('products.edit', $product->id)}}" class="btn btn-info">تعديل</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        {{$products->links()}}
     </div>
 @endsection

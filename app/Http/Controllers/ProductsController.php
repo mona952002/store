@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        $products = Products::all();
-        $products = Products::with('category')->get();
+        $products = Products::paginate(3);
         return view('admin.products.index', compact('products'));
     }
     /**
